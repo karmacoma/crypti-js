@@ -510,5 +510,61 @@ describe("Crypti Js", function () {
 				});
 			});
 		});
+
+		describe("signature.js", function () {
+			var signature = crypti.signature;
+			it("should be ok", function () {
+				(signature).should.be.ok;
+			});
+
+			it("should be object", function () {
+				(signature).should.be.type('object');
+			});
+
+			it("should have properties", function () {
+				(signature).should.have.property("createSignature");
+			});
+
+			describe("#createSignature", function () {
+				var createSignature = signature.createSignature;
+				var sgn = null;
+
+				it("should be function", function () {
+					(createSignature).should.be.type("function");
+				});
+
+				it("should create signature transaction", function () {
+					sgn = createSignature("secret", "second secret");
+					(sgn).should.be.ok;
+					(sgn).should.be.type('object');
+				});
+
+				describe("returned signature transaction", function () {
+					it("should have empty recipientId", function () {
+						(sgn).should.have.property('recipientId').equal(null);
+					});
+
+					it("should have amount equal 0", function () {
+						(sgn.amount).should.be.type('number').equal(0);
+					});
+
+					it("should have asset", function () {
+						(sgn.asset).should.be.type('object');
+						(sgn.asset).should.be.not.empty;
+					});
+
+					it("should have signature inside asset", function () {
+						(sgn.asset).should.have.property('signature');
+					});
+
+					describe("signature in transaction", function () {
+						var signature = sgn.asset.signature;
+
+
+					})
+
+				});
+			});
+		});
 	});
 });
