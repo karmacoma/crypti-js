@@ -158,7 +158,7 @@ describe("Crypti Js", function () {
 			});
 
 			it("should return number", function () {
-				var fee = getFee({amount: 100000, type : 0}, 0.5);
+				var fee = getFee({amount: 100000, type: 0}, 0.5);
 				(fee).should.be.type('number');
 				(fee).should.be.not.NaN;
 			});
@@ -558,13 +558,193 @@ describe("Crypti Js", function () {
 					});
 
 					describe("signature in transaction", function () {
-						var signature = sgn.asset.signature;
+						it("should be ok", function () {
+							(sgn.asset.signature).should.be.ok;
+						})
 
+						it("should be object", function () {
+							(sgn.asset.signature).should.be.type('object');
+						});
 
-					})
+						it("should have publicKey property", function () {
+							(sgn.asset.signature).should.have.property('publicKey');
+						});
 
+						it("should have publicKey in hex", function () {
+							(sgn.asset.signature.publicKey).should.be.type('string').and.match(function () {
+								try {
+									new Buffer(sgn.asset.signature.publicKey);
+								} catch (e) {
+									return false;
+								}
+
+								return true;
+							});
+						});
+
+						it("should have publicKey in 32 bytes", function () {
+							var publicKey = new Buffer(sgn.asset.signature.publicKey, 'hex');
+							(publicKey.length).should.be.equal(32);
+						});
+					});
 				});
 			});
+		});
+
+		describe("slots.js", function () {
+			var slots = require("../lib/time/slots.js");
+
+			it("should be ok", function () {
+				(slots).should.be.ok;
+			});
+
+			it("should be object", function () {
+				(slots).should.be.type('object');
+			});
+
+			it("should have properties", function () {
+				var properties = ['interval', 'delegates', 'getTime', 'getRealTime', 'getSlotNumber', 'getSlotTime', 'getNextSlot', 'getLastSlot'];
+				properties.forEach(function (property) {
+					(slots).should.have.property(property);
+				});
+			});
+
+			describe(".interval", function () {
+				var interval = slots.interval;
+
+				it("should be ok", function () {
+					(interval).should.be.ok;
+				});
+
+				it("should be number and not NaN", function () {
+					(interval).should.be.type('number').and.not.NaN;
+				});
+			});
+
+			describe(".delegates", function () {
+				var delegates = slots.delegates;
+
+				it("should be ok", function () {
+					(delegates).should.be.ok;
+				});
+
+				it("should be number and not NaN", function () {
+					(delegates).should.be.type('number').and.not.NaN;
+				});
+			});
+
+			describe("#getTime", function () {
+				var getTime = slots.getTime;
+
+				it("should be ok", function () {
+					(getTime).should.be.ok;
+				});
+
+				it("should be a function", function () {
+					(getTime).should.be.type('function');
+				});
+
+				it("should return epoch time as number, equal to 196144", function () {
+					var d = 1425796144150;
+					var time = getTime(d);
+					(time).should.be.ok;
+					(time).should.be.type('number').and.equal(196144);
+				});
+			});
+
+			describe("#getRealTime", function () {
+				var getRealTime = slots.getRealTime;
+
+				it("should be ok", function () {
+					(getRealTime).should.be.ok;
+				});
+
+				it("should be a function", function () {
+					(getRealTime).should.be.type('function');
+				});
+
+				it("should return return real time, convert 196144 to 1425796144150", function () {
+					var d = 196144;
+					var real = getRealTime(d);
+					(real).should.be.ok;
+					(real).should.be.type('number').and.equal(1425796144000);
+				});
+			});
+
+			describe("#getSlotNumber", function () {
+				var getSlotNumber = slots.getSlotNumber;
+
+				it("should be ok", function () {
+					(getSlotNumber).should.be.ok;
+				});
+
+				it("should be a function", function () {
+					(getSlotNumber).should.be.type('function');
+				});
+
+				it("should return slot number, equal to 19614", function () {
+					var d = 196144;
+					var slot = getSlotNumber(d);
+					(slot).should.be.ok;
+					(slot).should.be.type('number').and.equal(19614);
+				});
+			});
+
+			describe("#getSlotTime", function () {
+				var getSlotTime = slots.getSlotTime;
+
+				it("should be ok", function () {
+					(getSlotTime).should.be.ok;
+				});
+
+				it("should be function", function () {
+					(getSlotTime).should.be.type('function');
+				});
+
+				it("should return slot time number, equal to ", function () {
+					var slot = 19614;
+					var slotTime = getSlotTime(19614);
+					(slotTime).should.be.ok;
+					(slotTime).should.be.type('number').and.equal(196140);
+				});
+			});
+
+			describe("#getNextSlot", function () {
+				var getNextSlot = slots.getNextSlot;
+
+				it("should be ok", function () {
+					(getNextSlot).should.be.ok;
+				});
+
+				it("should be function", function () {
+					(getNextSlot).should.be.type('function');
+				});
+
+				it("should return next slot number", function () {
+					var nextSlot = getNextSlot();
+					(nextSlot).should.be.ok;
+					(nextSlot).should.be.type('number').and.not.NaN;
+				});
+			});
+
+			describe("#getLastSlot", function () {
+				var getLastSlot = slots.getLastSlot;
+
+				it("should be ok", function () {
+					(getLastSlot).should.be.ok;
+				});
+
+				it("should be function", function () {
+					(getLastSlot).should.be.type('function');
+				});
+
+				it("should return last slot number", function () {
+					var lastSlot = getLastSlot(slots.getNextSlot());
+					(lastSlot).should.be.ok;
+					(lastSlot).should.be.type('number').and.not.NaN;
+				});
+			});
+
 		});
 	});
 });
