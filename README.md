@@ -55,6 +55,23 @@ var crypti = require('crypti');
 var transaction = createVote("secret", ["+58199578191950019299181920120128129"], "secondSecret");
 ```
 
+# Communication with peers
+
+All transactions most go to ```/peer/transactions``` with method "POST"
+
+Example:
+
+```js
+Method: POST
+Content-Type: application/json
+
+{
+    "transaction" : {
+        .....
+    }
+}
+```
+
 # License
 
-MIT.
+MIT
