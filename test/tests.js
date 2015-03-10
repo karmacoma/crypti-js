@@ -663,7 +663,7 @@ describe("Crypti Js", function () {
 					(getRealTime).should.be.type('function');
 				});
 
-				it("should return return real time, convert 196144 to 1425796144150", function () {
+				it("should return return real time, convert 196144 to 1425796144000", function () {
 					var d = 196144;
 					var real = getRealTime(d);
 					(real).should.be.ok;
