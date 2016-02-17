@@ -1,63 +1,61 @@
-# crypti-js
+# Crypti JS
 
-Crypti Pure JS Transactions library. Send transactions from browser. Yeah, yeah!
+A client-side transactions library for [Crypti](https://crypti.me/). Allows transactions to be sent from within the browser, using a simple API.
 
-# Installation
-
-To installation run: 
+## Installation
 
 ```
-npm install crypti-js
+git clone git@github.com:karmacoma/crypti-js.git
+cd crypti-js
+npm install
 ```
 
-# Tests
-
-To run tests use command: 
+## Tests
 
 ```
 npm test
 ```
 
-Tests written in mocha + schedule.js
+Tests written using mocha + schedule.js.
 
-# How to use
+## Usage
 
 Each function call has **secondSecret** parameter, this parameter is optional.
 
-# Create transaction
+### Create transaction
 
 Send 1000 XCR to 1859190791819301C
 
 ```js
-var crypti = require('crypti');
+var crypti = require('crypti-js');
 var transaction = crypti.transaction.createTransaction("1859190791819301C", 1000, "secret", "secondSecret");
 ```
 
-# Create second signature transaction
+### Create second signature transaction
 
 ```js
-var crypti = require('crypti');
+var crypti = require('crypti-js');
 var transaction = crypti.transaction.createTransaction("secret", "secondSecret");
 ```
 
-# Create delegate transaction
+### Create delegate transaction
 
 ```js
-var crypti = require('crypti');
+var crypti = require('crypti-js');
 var transaction = crypti.transaction.createDelegate("secret", "username", "secondSecret");
 ```
 
-# Create vote transaction 
+### Create vote transaction
 
 
 ```js
-var crypti = require('crypti');
+var crypti = require('crypti-js');
 var transaction = createVote("secret", ["+58199578191950019299181920120128129"], "secondSecret");
 ```
 
-# Communication with peers
+### Peers Communication
 
-All transactions most go to ```/peer/transactions``` with method "POST"
+All transactions are sent to `/api/peer/transactions` using the `POST` method.
 
 Example:
 
@@ -67,11 +65,16 @@ Content-Type: application/json
 
 {
     "transaction" : {
-        .....
+        ...
     }
 }
 ```
 
-# License
+## Authors
+
+- Boris Povod <boris@crypti.me>
+- Olivier Beddows <olivier@crypti.io>
+
+## License
 
 MIT
