@@ -1,12 +1,16 @@
 {
   "name": "crypti-js",
   "version": "1.0.0",
-  "description": "Crypti JS Transaction library",
+  "description": "Client-side transactions library for Crypti",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:karmacoma/crypti-js.git"
+  },
+  "author": "Boris Povod <boris@crypti.me>, Olivier Beddows <olivier@lisk.io>",
   "license": "MIT",
   "dependencies": {
     "browserify-bignum": "^1.3.0-2",
