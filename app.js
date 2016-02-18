@@ -426,7 +426,7 @@ function getKeys(secret) {
 	}
 }
 
-function getAddress(publicKey) {
+function getAddress(publicKey, char) {
 	var publicKeyHash = crypto.createHash('sha256').update(publicKey.toString('hex'), 'hex').digest();
 	var temp = new Buffer(8);
 
@@ -434,7 +434,7 @@ function getAddress(publicKey) {
 		temp[i] = publicKeyHash[7 - i];
 	}
 
-	var address = bignum.fromBuffer(temp).toString() + "C";
+	var address = bignum.fromBuffer(temp).toString() + (char || 'C');
 	return address;
 }
 
